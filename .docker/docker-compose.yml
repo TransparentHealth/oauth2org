@@ -1,0 +1,21 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    environment:
+            - POSTGRES_DB=smh
+            - POSTGRES_PASSWORD=toor
+    ports:
+            - "5432:5432"
+  smh:
+    build:
+      context: ../
+      dockerfile: .docker/Dockerfile
+    ports:
+      - "8000:80"
+    environment:
+            - OAUTHLIB_INSECURE_TRANSPORT=true
+            - DATABASES_CUSTOM=postgres://postgres:toor@db:5432/smh
+            - ALLOWED_HOSTS=localhost
+    depends_on:
+      - db
