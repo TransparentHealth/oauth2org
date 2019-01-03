@@ -28,7 +28,7 @@ PyYAML==3.13
 requests==2.20.0
 six==1.11.0
 social-auth-app-django==2.1.0
-git+https://github.com/mpdavis/python-jose.git@22669734c632b3848b66729db47c2c8003824b34#egg=python-jose-3.0.2
+git+https://github.com/mpdavis/python-jose.git@414e71b77718850e0208fa9f8682867676592dd9#egg=python-jose-3.0.2
 pyjwkest==1.4.0
 tox==3.2.1
 urllib3==1.23
