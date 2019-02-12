@@ -249,11 +249,12 @@ DEFAULT_DISCLOSURE_TEXT = """
 
 DISCLOSURE_TEXT = env('DJANGO_PRIVACY_POLICY_URI', DEFAULT_DISCLOSURE_TEXT)
 
-HOSTNAME_URL = env('HOSTNAME_URL', 'http://localhost:8000')
+HOSTNAME_URL = env('HOSTNAME_URL', 'http://sharemyhealth:8000')
 
-VMI_SIGNUP_URL = "%s/accounts/create-account/%s/" % \
+VMI_SIGNUP_URL = "%s/accounts/create-account/%s/?redirect_url=%s" % \
                  (SOCIAL_AUTH_VERIFYMYIDENTITY_OPENIDCONNECT_OIDC_ENDPOINT,
-                  APPLICATION_TITLE)
+                  APPLICATION_TITLE,
+                  HOSTNAME_URL)
 
 SETTINGS_EXPORT = [
     'DEBUG',
