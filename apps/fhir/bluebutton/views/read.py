@@ -200,7 +200,7 @@ def generic_read(request,
     logger.debug('Here is the URL to send, %s now add '
                  'GET parameters %s' % (pass_to, pass_params))
 
-    if pass_params is not '':
+    if pass_params != '':
         pass_to += pass_params
 
     logger.debug("Making request:%s" % pass_to)
@@ -238,7 +238,7 @@ def generic_read(request,
 
     # write session variables if _getpages was found
     ikey = find_ikey(r.text)
-    if ikey is not '':
+    if ikey != '':
 
         save_url = get_target_url(fhir_url, resource_type)
         # print("Store fhir_url:%s but only: %s" % (fhir_url,save_url))
