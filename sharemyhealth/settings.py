@@ -14,7 +14,7 @@ import os
 import dj_database_url
 from django.contrib.messages import constants as messages
 from getenv import env
-
+from django.utils.translation import ugettext_lazy as _
 
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
@@ -43,10 +43,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'apps.capabilities',
+    'apps.dot_ext',
     'oauth2_provider',
     'apps.home',
     'apps.verifymyidentity',
     'apps.accounts',
+    'apps.fhir.bluebutton',
+    'apps.fhir.server',
+    'apps.fhir.fhir_core',
+    'apps.wellknown',
     # 3rd Party ---------------------
     'corsheaders',
     'bootstrapform',
@@ -279,3 +285,39 @@ SETTINGS_EXPORT = [
     'USER_DOCS_TITLE',
     'VMI_SIGNUP_URL',
 ]
+
+
+# Django Oauth Tookit settings and customizations
+
+OAUTH2_PROVIDER_APPLICATION_MODEL = 'dot_ext.Application'
+# removing apps. by using AppConfig for apps.dot_ext
+OAUTH2_PROVIDER = {
+    'OAUTH2_VALIDATOR_CLASS': 'apps.dot_ext.oauth2_validators.'
+                              'SingleAccessTokenValidator',
+    'OAUTH2_SERVER_CLASS': 'apps.dot_ext.oauth2_server.Server',
+    'SCOPES_BACKEND_CLASS': 'apps.dot_ext.scopes.CapabilitiesScopes',
+    'OAUTH2_BACKEND_CLASS': 'apps.dot_ext.oauth2_backends.OAuthLibSMARTonFHIR'
+}
+
+# These choices will be available in the expires_in field
+# of the oauth2 authorization page.
+DOT_EXPIRES_IN = (
+    (86400 * 365 * 5, _('5 Years')),
+    (86400, _('1 Day')),
+    (86400 * 7, _('1 Week')),
+    (86400 * 365, _('1 Year')),
+    (86400 * 365 * 3, _('3 Years')),
+    (86400 * 365 * 10, _('10 Years')),
+    (86400 * 365 * 100, _('Forever')),
+)
+
+GRANT_AUTHORIZATION_CODE = "authorization-code"
+GRANT_IMPLICIT = "implicit"
+# GRANT_PASSWORD = "password"
+# GRANT_CLIENT_CREDENTIALS = "client-credentials"
+GRANT_TYPES = (
+    (GRANT_AUTHORIZATION_CODE, _("Authorization code")),
+    # (GRANT_IMPLICIT, _("Implicit")),
+    # (GRANT_PASSWORD, _("Resource owner password-based")),
+    # (GRANT_CLIENT_CREDENTIALS, _("Client credentials")),
+)
