@@ -2,7 +2,7 @@ from collections import OrderedDict
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.test import TestCase, RequestFactory
-from apps.accounts.models import UserProfile
+from ...accounts.models import UserProfile
 from apps.test import BaseApiTest
 from apps.fhir.bluebutton.models import (Crosswalk)
 from apps.fhir.server.models import (SupportedResourceType,
